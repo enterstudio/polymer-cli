@@ -81,7 +81,9 @@ export async function build(
 
   const compiledToES5 = !!(optimizeOptions.js && optimizeOptions.js.compile);
   if (compiledToES5) {
-    buildStream = buildStream.pipe(new UseES5WebcomponentsLoader());
+    buildStream = buildStream
+        .pipe(new UseES5WebcomponentsLoader())
+        .pipe(new InjectBabelHelpers());
   }
 
   buildStream.once('data', () => {
